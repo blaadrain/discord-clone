@@ -5,7 +5,10 @@ export type ModalType =
   | "createServer"
   | "invitePeople"
   | "editServer"
-  | "manageMembers";
+  | "manageMembers"
+  | "createChannel"
+  | "leaveServer"
+  | "deleteServer";
 
 type ModalData = {
   server?: Server;
