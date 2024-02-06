@@ -21,7 +21,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
         <button
           type="button"
           onClick={() => onChange("")}
-          className="absolute right-0 top-0 rounded-full bg-rose-500 p-1 text-white shadow-sm"
+          className="absolute right-0 top-0 rounded-full bg-rose-500 p-1 text-white shadow-sm transition hover:bg-rose-700"
         >
           <X className="h-4 w-4" />
         </button>
