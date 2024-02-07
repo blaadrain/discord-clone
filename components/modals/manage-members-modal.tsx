@@ -97,7 +97,7 @@ export const ManageMembersModal = () => {
             Manage Members
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            This server has {server?.members?.length} members
+            This server has {server?.members?.length} members.
           </DialogDescription>
         </DialogHeader>
         <ScrollArea className="mt-8 max-h-[420px] pr-6">

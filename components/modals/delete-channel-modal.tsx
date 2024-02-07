@@ -13,25 +13,31 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import qs from "query-string";
 
-export const DeleteServerModal = () => {
+export const DeleteChannelModal = () => {
   const router = useRouter();
 
   const { isOpen, onClose, type, data } = useModal();
-  const { server } = data;
+  const { server, channel } = data;
 
-  const isModalOpen = isOpen && type === "deleteServer";
+  const isModalOpen = isOpen && type === "deleteChannel";
   const [isLoading, setIsLoading] = useState(false);
 
   const onDelete = async () => {
     try {
       setIsLoading(true);
 
-      await axios.delete(`/api/servers/${server?.id}`);
+      const url = qs.stringifyUrl({
+        url: `/api/channels/${channel?.id}`,
+        query: { serverId: server.id },
+      });
+
+      await axios.delete(url);
 
       onClose();
       router.refresh();
-      router.push("/");
+      router.push(`/servers/${server.id}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -44,13 +50,13 @@ export const DeleteServerModal = () => {
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="text-center text-2xl font-bold">
-            Delete Server
+            Delete Channel
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
             Are you sure you want to do this?
             <br />
-            <span className="font-semibold capitalize text-indigo-500">
-              {server?.name}
+            <span className="font-semibold text-indigo-500">
+              #{channel?.name}
             </span>{" "}
             will be permanently deleted.
           </DialogDescription>
