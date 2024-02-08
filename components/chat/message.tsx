@@ -16,6 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { useParams, useRouter } from "next/navigation";
+
 type ChatMessageProps = {
   id: string;
   content: string;
@@ -53,8 +55,17 @@ export const ChatMessage = ({
   socketUrl,
   socketQuery,
 }: ChatMessageProps) => {
+  const router = useRouter();
+  const params = useParams();
+
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = useModal();
+
+  const onMemberClick = () => {
+    if (member.id === currentMember.id) return;
+
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,13 +116,19 @@ export const ChatMessage = ({
   return (
     <div className="group relative flex w-full items-center p-4 transition hover:bg-black/5">
       <div className="group flex w-full items-start gap-x-4">
-        <div className="cursor-pointer transition hover:drop-shadow-md">
+        <div
+          onClick={onMemberClick}
+          className="cursor-pointer transition hover:drop-shadow-md"
+        >
           <UserAvatar src={member.profile.imageUrl} />
         </div>
         <div className="flex w-full flex-col gap-y-1">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
-              <span className="cursor-pointer text-sm font-semibold hover:underline">
+              <span
+                onClick={onMemberClick}
+                className="cursor-pointer text-sm font-semibold hover:underline"
+              >
                 {member.profile.name}
               </span>
               <ActionTooltip label={member.role}>
