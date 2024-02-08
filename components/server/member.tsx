@@ -5,6 +5,7 @@ import { Member, Profile, Server } from "@prisma/client";
 import { Crown, Wrench } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { UserAvatar } from "../user-avatar";
+import { ActionTooltip } from "../action-tooltip";
 
 type ServerMemberProps = {
   member: Member & { profile: Profile };
@@ -49,7 +50,7 @@ export const ServerMember = ({ member, server }: ServerMemberProps) => {
       >
         {member.profile.name}
       </p>
-      {icon}
+      <ActionTooltip label={member.role}>{icon}</ActionTooltip>
     </button>
   );
 };
