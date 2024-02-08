@@ -1,6 +1,7 @@
 import { ChatHeader } from "@/components/chat/header";
 import { ChatInput } from "@/components/chat/input";
 import { ChatMessages } from "@/components/chat/messages";
+import { MediaRoom } from "@/components/media-room";
 import { getOrCreateConversation } from "@/lib/conversation";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -12,9 +13,15 @@ type ConversationPageProps = {
     memberId: string;
     serverId: string;
   };
+  searchParams: {
+    video?: boolean;
+  };
 };
 
-const ConversationPage = async ({ params }: ConversationPageProps) => {
+const ConversationPage = async ({
+  params,
+  searchParams,
+}: ConversationPageProps) => {
   const profile = await currentProfile();
 
   if (!profile) return redirectToSignIn();
@@ -51,23 +58,29 @@ const ConversationPage = async ({ params }: ConversationPageProps) => {
         serverId={params.serverId}
         type="conversation"
       />
-      <ChatMessages
-        member={currentMember}
-        name={otherMember.profile.name}
-        chatId={conversation.id}
-        type="conversation"
-        apiUrl="/api/direct-messages"
-        paramKey="conversationId"
-        paramValue={conversation.id}
-        socketUrl="/api/socket/direct-messages"
-        socketQuery={{ conversationId: conversation.id }}
-      />
-      <ChatInput
-        name={otherMember.profile.name}
-        type="conversation"
-        apiUrl="/api/socket/direct-messages"
-        query={{ conversationId: conversation.id }}
-      />
+      {searchParams.video ? (
+        <MediaRoom chatId={conversation.id} audio={true} video={true} />
+      ) : (
+        <>
+          <ChatMessages
+            member={currentMember}
+            name={otherMember.profile.name}
+            chatId={conversation.id}
+            type="conversation"
+            apiUrl="/api/direct-messages"
+            paramKey="conversationId"
+            paramValue={conversation.id}
+            socketUrl="/api/socket/direct-messages"
+            socketQuery={{ conversationId: conversation.id }}
+          />
+          <ChatInput
+            name={otherMember.profile.name}
+            type="conversation"
+            apiUrl="/api/socket/direct-messages"
+            query={{ conversationId: conversation.id }}
+          />
+        </>
+      )}
     </div>
   );
 };
