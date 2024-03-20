@@ -1,6 +1,6 @@
 # Fullstack Discord Clone with Next.js 13, React, Socket.io, Prisma, Tailwind, CockroachDB
 
-![discord](https://github.com/blaadrain/discord-clone/assets/96272057/a60394ee-d070-4fb4-a370-a5df4b831e99)
+![discord](https://github.com/blaadrain/discord-clone/assets/96272057/dd53492b-fb2c-4813-bb8b-192438d2dbed)
 
 Key Features:
 
