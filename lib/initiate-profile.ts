@@ -16,10 +16,15 @@ export const initiateProfile = async () => {
 
   if (profile) return profile;
 
+  const username =
+    user.firstName && user.lastName
+      ? user?.firstName || user?.lastName || "Guest"
+      : `${user.firstName} ${user.lastName}`;
+
   const newProfile = await db.profile.create({
     data: {
       userId: user.id,
-      name: `${user.firstName} ${user.lastName}`,
+      name: username,
       imageUrl: user.imageUrl,
       email: user.emailAddresses[0].emailAddress,
     },

@@ -100,7 +100,7 @@ export const ManageMembersModal = () => {
             This server has {server?.members?.length} members.
           </DialogDescription>
         </DialogHeader>
-        <ScrollArea className="mt-8 max-h-[420px] pr-6">
+        <ScrollArea className="mt-8 max-h-[420px] px-4">
           {server?.members?.map((member: Member) => (
             <div key={member.id} className="mb-6 flex items-center gap-x-2">
               <UserAvatar src={member.profile.imageUrl} />
